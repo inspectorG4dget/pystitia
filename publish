@@ -1,0 +1,9 @@
+rm -rf src build dist
+mkdir -p src/pystitia
+
+for fname in __init__.py pystitia.py ; do
+    cp "$fname" src/pystitia/
+done
+
+python -m build
+python -m twine upload dist/*
