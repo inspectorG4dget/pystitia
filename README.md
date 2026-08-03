@@ -79,6 +79,25 @@ def withdraw(balance, amount):
     return balance - amount
 ```
 
+### Keyword Arguments
+
+Decorated functions can be called with positional arguments, keyword arguments, or a mix of both, just like the original undecorated function:
+
+```python
+@contracts(
+    preconditions=[
+        lambda balance, amount: amount > 0,
+        lambda balance, amount: balance >= amount
+    ]
+)
+def withdraw(balance, amount):
+    return balance - amount
+
+withdraw(100, 30)              # positional
+withdraw(balance=100, amount=30)  # keyword
+withdraw(100, amount=30)       # mixed
+```
+
 ### Checking Object Mutations
 
 Pystitia allows you to verify whether objects were modified during function execution:
@@ -234,7 +253,6 @@ except PostConditionError as e:
 
 - Requires explicit `setTestMode()` call before use
 - Deep copying adds overhead for postconditions using `__old__`
-- Decorated functions lose their original signature (affects IDE autocomplete)
 - No support for class invariants (yet)
 
 ## Contributing
